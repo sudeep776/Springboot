@@ -2,6 +2,7 @@ package com.Prep.spring.controller;
 
 import com.Prep.spring.exception.AppError;
 import com.Prep.spring.models.Employee;
+import com.Prep.spring.repository.EmployeeRepository;
 import com.Prep.spring.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeservice;
+
+    @Autowired
+    private EmployeeRepository empRepo;
 
     @GetMapping("/all")
     private List<Employee> getEmployee(){
@@ -47,5 +51,15 @@ public class EmployeeController {
     @PutMapping("{id}")
     private Employee updateEmployeeById(@PathVariable("id") Integer id,@RequestBody Employee employee) throws ChangeSetPersister.NotFoundException {
         return employeeservice.updateEmployeeById(employee,id);
+    }
+
+    @GetMapping("/queryemp/{id}")
+    private List<Employee> getEmployeeq(@PathVariable("id") int id){
+        return empRepo.getAllUsers(id);
+    }
+
+    @GetMapping("/bymethod")
+    private Employee getbyMethod(@RequestParam("phone") String phone){
+        return empRepo.findByPhone(phone);
     }
 }
