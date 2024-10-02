@@ -1,6 +1,6 @@
 package com.Prep.spring.controller;
 
-import com.Prep.spring.exception.AppError;
+import com.Prep.spring.Exception.ResourceNotFoundException;
 import com.Prep.spring.models.Employee;
 import com.Prep.spring.repository.EmployeeRepository;
 import com.Prep.spring.service.EmployeeService;
@@ -32,15 +32,14 @@ public class EmployeeController {
 
     @PostMapping("/save")
     private ResponseEntity<Object> saveEmployee(@RequestBody @Valid @Validated Employee employee, Errors errors){
-        if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(AppError.builder().errorMessage(errors.getFieldError().getDefaultMessage()).errorCode("bad request").build());
-       }
         return ResponseEntity.ok().body(employeeservice.saveEmployee(employee));
     }
 
     @GetMapping("{id}")
-    private Optional<Employee> getEmployeeById(@PathVariable("id") Integer id){
-        return employeeservice.getEmployeeById(id);
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") Integer id) {
+        Employee employee = employeeservice.getEmployeeById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found with the id: " + id));
+        return ResponseEntity.ok(employee);
     }
 
     @DeleteMapping("/delete/{id}")

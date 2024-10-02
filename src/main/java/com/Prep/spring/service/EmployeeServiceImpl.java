@@ -1,6 +1,5 @@
 package com.Prep.spring.service;
 
-import com.Prep.spring.exception.ResourceNotFoundException;
 import com.Prep.spring.models.Employee;
 import com.Prep.spring.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Optional<Employee> getEmployeeById(Integer id) {
-        return Optional.ofNullable(employeeRepository.findById(id).orElseThrow(ResourceNotFoundException::new));
+        return employeeRepository.findById(id);
     }
 
     @Override
@@ -36,7 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public Employee updateEmployeeById(Employee employee,Integer id) {
-        Employee existingEmployee = employeeRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        Employee existingEmployee = employeeRepository.findById(id).orElseThrow(null);
         existingEmployee.setName(employee.getName());
         existingEmployee.setEmail(employee.getEmail());
         existingEmployee.setPhone(employee.getPhone());

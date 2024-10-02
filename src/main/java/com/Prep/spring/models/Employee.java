@@ -1,6 +1,7 @@
 package com.Prep.spring.models;
 
 import com.Prep.spring.validator.PhoneNumberValidator;
+import com.Prep.spring.validator.VaildateEmployeeType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
+    @VaildateEmployeeType(message="invalid employee type")
     @Column(name = "type")
     private String employeeType;
 }
