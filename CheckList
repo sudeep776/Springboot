@@ -1,0 +1,6 @@
+Springboot revision : 
+1) Rest controller - pathvariable and requestparam  
+2) Exception handling - Global Exception handler 
+3) JPARepsitory - custom methods
+4) Custom annotation - grouping 
+5) Relations - Hibernate
